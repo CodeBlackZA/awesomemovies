@@ -1,25 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route, 
+} from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import Home from './screens/Home';
+import MovieDetails from './screens/MovieDetails';
+import Movies from './screens/Movies';
+import { GlobalStyle } from './styles/global';
+import { theme } from './utils/theme';
+import About from './screens/About/index';
+import { Layout } from './styles/Layout';
+import NavBar from './components/NavBar';
 
-function App() {
+const Routes = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route exact path="/movies">
+          <Movies />
+        </Route>
+        <Route exact path="/movie/:id">
+          <MovieDetails />
+        </Route>
+      </Switch>
+    </Router>
+  )
+}
+
+const App: React.FC<{}> = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <NavBar />
+        <Routes />
+      </Layout>
+      <GlobalStyle />
+    </ThemeProvider>
   );
 }
 
